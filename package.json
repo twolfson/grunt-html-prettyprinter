@@ -30,7 +30,8 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "grunt": "~0.3.12"
+    "grunt": "~0.3.12",
+    "html": "0.0.6"
   },
   "devDependencies": {
     "grunt": "~0.3.12"
