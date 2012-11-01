@@ -18,17 +18,24 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('html-prettyprinter', 'Prettyprint HTML from src to dest', function () {
     // Collect the filepaths we need
     var file = this.file,
+        data = this.data,
         src = file.src,
         srcFiles = grunt.file.expand(src),
+        separator = data.separator || '\n',
         dest = file.dest;
 
     // Read in the srcFiles, join, and beautify it
-    var srcContent = srcFiles.map(grunt.file.read),
-        srcBlob = srcContent.join('\n'),
+    var srcBlob = grunt.helper('concat', srcFiles, {separator: separator});
         beautifiedContent = grunt.helper('html-prettyprinter', srcBlob);
 
     // Write out the content
     grunt.file.write(dest, beautifiedContent);
+
+    // Fail task if errors were logged.
+    if (this.errorCount) { return false; }
+
+    // Otherwise, print a success message.
+    grunt.log.writeln('File "' + this.file.dest + '" created.');
   });
 
   // ==========================================================================
