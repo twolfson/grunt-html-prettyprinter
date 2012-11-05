@@ -4,7 +4,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     'html-prettyprinter': {
       all: {
-        src: ['expected/file.js'],
+        src: ['test_files/file.js'],
         dest: 'actual/file.js'
       }
     },
