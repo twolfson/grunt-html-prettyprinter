@@ -25,7 +25,7 @@ module.exports = function (grunt) {
         dest = file.dest;
 
     // Read in the srcFiles, join, and beautify it
-    var srcBlob = grunt.helper('concat', srcFiles, {separator: separator});
+    var srcBlob = grunt.helper('concat', srcFiles, {separator: separator}),
         beautifiedContent = grunt.helper('html-prettyprinter', srcBlob);
 
     // Write out the content
