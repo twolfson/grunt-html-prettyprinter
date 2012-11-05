@@ -28,9 +28,9 @@ exports['html-prettyprinter'] = {
   'multiTask': function(test) {
     test.expect(1);
     // tests here
-    var expectedContent = grunt.file.read('expected/file.js'),
-        actualContent = grunt.file.read('actual/file.js');
-    test.equal(actualContent, expectedContent, 'should return the correct value.');
+    var expectedContent = grunt.file.read('expected/file.html'),
+        actualContent = grunt.file.read('actual/file.html');
+    test.equal(actualContent, expectedContent, 'should match the beautified content.');
     test.done();
   }
 };
