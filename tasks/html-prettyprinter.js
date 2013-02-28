@@ -5,8 +5,25 @@
  * Copyright (c) 2012 Todd Wolfson
  * Licensed under the MIT license.
  */
-var htmlPrettyprinter = require('html').prettyPrint;
+var htmlPrettyprinter = require('html').prettyPrint,
+    gruntRetro = require('grunt-retro');
 module.exports = function (grunt) {
+  // Bind grunt-retro
+  grunt = gruntRetro(grunt);
+
+  // Manual fallback for 0.4 compatibility ;_;
+  // and without introducing bulky/unnecessary dependencies
+  // https://github.com/gruntjs/grunt/blob/0.3-stable/tasks/concat.js#L33-L41
+  // https://github.com/gruntjs/grunt-lib-legacyhelpers/blob/master/lib/legacyhelpers.js#L16-L24
+  grunt.registerHelper('concat', function(files, options) {
+    options = grunt.utils._.defaults(options || {}, {
+      separator: grunt.utils.linefeed
+    });
+    return files ? files.map(function(filepath) {
+      // return grunt.task.directive(filepath, grunt.file.read);
+      return grunt.file.read(filepath);
+    }).join(grunt.utils.normalizelf(options.separator)) : '';
+  });
 
   // Please see the grunt documentation for more information regarding task and
   // helper creation: https://github.com/cowboy/grunt/blob/master/docs/toc.md

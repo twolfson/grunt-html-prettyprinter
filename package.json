@@ -30,7 +30,8 @@
     "test": "cd test && grunt"
   },
   "dependencies": {
-    "html": "0.0.7"
+    "html": "0.0.7",
+    "grunt-retro": "~0.2.1"
   },
   "_devDependencies": {
     "grunt": "~0.3.12"
