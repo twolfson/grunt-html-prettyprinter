@@ -27,13 +27,17 @@
     "node": "*"
   },
   "scripts": {
-    "test": "grunt --base ./test/ --config ./test/grunt.js"
+    "test": "cd test && grunt"
   },
   "dependencies": {
-    "grunt": "~0.3.12",
     "html": "0.0.7"
   },
+  "_devDependencies": {
+    "grunt": "~0.3.12"
+  },
   "devDependencies": {
+    "grunt": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.1.2"
   },
   "keywords": [
     "gruntplugin",
