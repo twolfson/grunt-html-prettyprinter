@@ -17,6 +17,7 @@ grunt.loadNpmTasks('grunt-html-prettyprinter');
 ## Documentation
 ```js
 grunt.initConfig({
+  // Beautify single file
   'html-prettyprinter': {
     single: {
       // HTML file to beauty
@@ -34,6 +35,37 @@ grunt.initConfig({
 
     // Lastly, we support the grunt compact format (dest: src)
     'clean/index.html': 'dirty/index.html'
+  },
+  // Beautify multiple files in a directory
+  'html-prettyprinter-dir': {
+    multi: {
+      // Files to beautify
+      src: ['dirty/index.html', 'dirty/main.html'],
+
+      // Directory to output beautified files to
+      dest: 'clean/'
+    },
+
+    // Minimatch expansion is supported
+    expansion: {
+      // Expands to ['dirty/index.html', 'dirty/main.html']
+      src: ['dirty/*.html'],
+      dest: 'clean/'
+    },
+
+    // Custom routing is supported
+    routing: {
+      src: ['dirty/index.html', 'dirty/main.html'],
+      dest: 'clean/',
+      // Rename all files to .pretty.html
+      router: function (file) {
+        var filename = path.basename(file);
+        return filename.replace('.html', '.pretty.html');
+      }
+    },
+
+    // Lastly, we support the grunt compact format (dest: src)
+    'clean/': ['dirty/index.html', 'dirty/main.html']
   }
 });
 ```
