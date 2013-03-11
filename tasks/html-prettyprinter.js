@@ -6,6 +6,7 @@
  * Licensed under the MIT license.
  */
 var htmlPrettyprinter = require('html').prettyPrint,
+    path = require('path'),
     gruntRetro = require('grunt-retro');
 module.exports = function (grunt) {
   // Bind grunt-retro
@@ -33,6 +34,7 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   // Common abstraction for single and dir tasks
+  // TODO: Relocate into grunt helper (html-prettyprinter-file)
   function prettyprint(options) {
     // Collect the filepaths we need
     var file = options.file,
@@ -50,6 +52,7 @@ module.exports = function (grunt) {
     grunt.file.write(dest, beautifiedContent);
   }
 
+  // Beautify single file
   grunt.registerMultiTask('html-prettyprinter', 'Prettyprint HTML from src to dest', function () {
     // Run the prettyprint task on our single item
     prettyprint(this);
@@ -59,6 +62,40 @@ module.exports = function (grunt) {
 
     // Otherwise, print a success message.
     grunt.log.writeln('File "' + this.file.dest + '" created.');
+  });
+
+  // Beautify directory of files
+  var defaultRouter = path.basename;
+  grunt.registerMultiTask('html-prettyprinter-dir', 'Prettyprint HTML directory from src to dest', function () {
+    // Localize information
+    var file = this.file,
+        data = this.data,
+        router = data.router || defaultRouter,
+        src = file.src,
+        destDir = file.dest,
+        srcFiles = grunt.file.expand(src);
+
+    // Iterate over files and pretty print each one
+    var destFiles = srcFiles.map(function prettyprintDirFile (srcFile) {
+      // Determine the end path for the file
+      var destFile = router(srcFile),
+          destPath = path.join(destDir, destFile);
+
+      // Run the prettyprint task on our single item
+      prettyprint({
+        file: {src: srcFile, dest: destPath},
+        data: data
+      });
+
+      // Return the destination
+      return destPath;
+    });
+
+    // Fail task if errors were logged.
+    if (this.errorCount) { return false; }
+
+    // Otherwise, print a success message.
+    grunt.log.writeln('File "' + destFiles.join('", "') + '" created.');
   });
 
   // ==========================================================================
