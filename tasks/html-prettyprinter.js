@@ -47,11 +47,17 @@ module.exports = function (grunt) {
   });
 
   // TODO: This will become a node_module in a bit
+  /**
+   * Add directory and routing functionality to grunt task
+   * @param {Function} task Function to call with grunt options
+   * @param {Object} this<Context> Same context as one would expect from grunt
+   * @return {String[]} Array of destination files written out to
+   */
   var defaultRouter = path.basename;
-  function gruntMixinDir(task, options) {
+  function gruntMixinDir(task) {
     // Localize information
-    var file = options.file,
-        data = options.data,
+    var file = this.file,
+        data = this.data,
         router = data.router || defaultRouter,
         src = file.src,
         destDir = file.dest,
@@ -64,7 +70,7 @@ module.exports = function (grunt) {
           destPath = path.join(destDir, destFile);
 
       // Run the task with our options
-      task({
+      task.call({
         file: {src: srcFile, dest: destPath},
         data: data
       });
@@ -73,32 +79,35 @@ module.exports = function (grunt) {
       return destPath;
     });
 
-    // Return the files we wrote to
-    return destFiles;
+    // Return information about what happened
+    var retObj = {
+      srcFiles: srcFiles,
+      router: router,
+      destFiles: destFiles
+    };
+    return retObj;
   }
 
   // Beautify directory of files
   grunt.registerMultiTask('html-prettyprinter-dir', 'Prettyprint HTML directory from src to dest', function () {
     // Run the prettyprint task on our items
-    var destFiles = gruntMixinDir(function callPrettyprinterFile (options) {
-      grunt.helper('html-prettyprinter-file', options);
-    }, this);
+    var taskInfo = gruntMixinDir.call(this,  grunt.helper('html-prettyprinter-file'));
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
 
     // Otherwise, print a success message.
-    grunt.log.writeln('File "' + destFiles.join('", "') + '" created.');
+    grunt.log.writeln('File "' + taskInfo.destFiles.join('", "') + '" created.');
   });
 
   // ==========================================================================
   // HELPERS
   // ==========================================================================
 
-  grunt.registerHelper('html-prettyprinter-file',  function prettyprintFile (options) {
+  grunt.registerHelper('html-prettyprinter-file',  function prettyprintFile () {
     // Collect the filepaths we need
-    var file = options.file,
-        data = options.data,
+    var file = this.file,
+        data = this.data,
         src = file.src,
         srcFiles = grunt.file.expand(src),
         separator = data.separator || '\n',
