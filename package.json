@@ -1,7 +1,7 @@
 {
   "name": "grunt-html-prettyprinter",
   "description": "Task that beautifies your HTML",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "homepage": "https://github.com/twolfson/grunt-html-prettyprinter",
   "author": {
     "name": "Todd Wolfson",
@@ -34,11 +34,11 @@
     "grunt-retro": "~0.2.1",
     "grunt-mixin-dir": "~0.1.0"
   },
-  "devDependencies": {
+  "_devDependencies": {
     "grunt": "~0.3.12",
     "grunt-contrib-clean": "~0.3.2"
   },
-  "_devDependencies": {
+  "devDependencies": {
     "grunt": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.1.2",
     "grunt-contrib-clean": "~0.4.0"
