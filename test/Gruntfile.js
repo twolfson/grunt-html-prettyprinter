@@ -12,5 +12,5 @@ module.exports = function (grunt) {
   process.chdir(__dirname);
 
   // Override default task
-  grunt.registerTask('default', ['html-prettyprinter', 'html-prettyprinter-dir', 'nodeunit']);
+  grunt.registerTask('default', ['clean', 'html-prettyprinter', 'html-prettyprinter-dir', 'nodeunit']);
 };
