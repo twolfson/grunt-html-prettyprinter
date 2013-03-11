@@ -6,11 +6,14 @@
  * Licensed under the MIT license.
  */
 var htmlPrettyprinter = require('html').prettyPrint,
-    path = require('path'),
-    gruntRetro = require('grunt-retro');
+    gruntRetro = require('grunt-retro'),
+    gruntMixinDirFn = require('grunt-mixin-dir');
 module.exports = function (grunt) {
   // Bind grunt-retro
   grunt = gruntRetro(grunt);
+
+  // Load in gruntMixinDir
+  gruntMixinDir = gruntMixinDirFn(grunt);
 
   // Manual fallback for 0.4 compatibility ;_;
   // and without introducing bulky/unnecessary dependencies
@@ -45,48 +48,6 @@ module.exports = function (grunt) {
     // Otherwise, print a success message.
     grunt.log.writeln('File "' + this.file.dest + '" created.');
   });
-
-  // TODO: This will become a node_module in a bit
-  /**
-   * Add directory and routing functionality to grunt task
-   * @param {Function} task Function to call with grunt options
-   * @param {Object} this<Context> Same context as one would expect from grunt
-   * @return {String[]} Array of destination files written out to
-   */
-  var defaultRouter = path.basename;
-  function gruntMixinDir(task) {
-    // Localize information
-    var file = this.file,
-        data = this.data,
-        router = data.router || defaultRouter,
-        src = file.src,
-        destDir = file.dest,
-        srcFiles = grunt.file.expand(src);
-
-    // Iterate over files and pretty print each one
-    var destFiles = srcFiles.map(function prettyprintDirFile (srcFile) {
-      // Determine the end path for the file
-      var destFile = router(srcFile),
-          destPath = path.join(destDir, destFile);
-
-      // Run the task with our options
-      task.call({
-        file: {src: srcFile, dest: destPath},
-        data: data
-      });
-
-      // Return the destination
-      return destPath;
-    });
-
-    // Return information about what happened
-    var retObj = {
-      srcFiles: srcFiles,
-      router: router,
-      destFiles: destFiles
-    };
-    return retObj;
-  }
 
   // Beautify directory of files
   grunt.registerMultiTask('html-prettyprinter-dir', 'Prettyprint HTML directory from src to dest', function () {
