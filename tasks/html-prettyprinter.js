@@ -91,7 +91,9 @@ module.exports = function (grunt) {
   // Beautify directory of files
   grunt.registerMultiTask('html-prettyprinter-dir', 'Prettyprint HTML directory from src to dest', function () {
     // Run the prettyprint task on our items
-    var taskInfo = gruntMixinDir.call(this,  grunt.helper('html-prettyprinter-file'));
+    var taskInfo = gruntMixinDir.call(this, function callPrettyprinterFile () {
+      grunt.helper('html-prettyprinter-file', this);
+    });
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
@@ -104,10 +106,10 @@ module.exports = function (grunt) {
   // HELPERS
   // ==========================================================================
 
-  grunt.registerHelper('html-prettyprinter-file',  function prettyprintFile () {
+  grunt.registerHelper('html-prettyprinter-file',  function prettyprintFile (options) {
     // Collect the filepaths we need
-    var file = this.file,
-        data = this.data,
+    var file = options.file,
+        data = options.data,
         src = file.src,
         srcFiles = grunt.file.expand(src),
         separator = data.separator || '\n',
