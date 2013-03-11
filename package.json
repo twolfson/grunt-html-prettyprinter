@@ -31,7 +31,8 @@
   },
   "dependencies": {
     "html": "0.0.7",
-    "grunt-retro": "~0.2.1"
+    "grunt-retro": "~0.2.1",
+    "grunt-mixin-dir": "~0.1.0"
   },
   "devDependencies": {
     "grunt": "~0.3.12",
