@@ -32,10 +32,11 @@ module.exports = function (grunt) {
   // TASKS
   // ==========================================================================
 
-  grunt.registerMultiTask('html-prettyprinter', 'Prettyprint HTML from src to dest', function () {
+  // Common abstraction for single and dir tasks
+  function prettyprint(options) {
     // Collect the filepaths we need
-    var file = this.file,
-        data = this.data,
+    var file = options.file,
+        data = options.data,
         src = file.src,
         srcFiles = grunt.file.expand(src),
         separator = data.separator || '\n',
@@ -47,6 +48,11 @@ module.exports = function (grunt) {
 
     // Write out the content
     grunt.file.write(dest, beautifiedContent);
+  }
+
+  grunt.registerMultiTask('html-prettyprinter', 'Prettyprint HTML from src to dest', function () {
+    // Run the prettyprint task on our single item
+    prettyprint(this);
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
