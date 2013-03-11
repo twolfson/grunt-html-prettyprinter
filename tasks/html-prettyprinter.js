@@ -46,12 +46,12 @@ module.exports = function (grunt) {
     grunt.log.writeln('File "' + this.file.dest + '" created.');
   });
 
-  // Beautify directory of files
+  // TODO: This will become a node_module in a bit
   var defaultRouter = path.basename;
-  grunt.registerMultiTask('html-prettyprinter-dir', 'Prettyprint HTML directory from src to dest', function () {
+  function gruntMixinDir(task, options) {
     // Localize information
-    var file = this.file,
-        data = this.data,
+    var file = options.file,
+        data = options.data,
         router = data.router || defaultRouter,
         src = file.src,
         destDir = file.dest,
@@ -63,8 +63,8 @@ module.exports = function (grunt) {
       var destFile = router(srcFile),
           destPath = path.join(destDir, destFile);
 
-      // Run the prettyprint task on our single item
-      grunt.helper('html-prettyprinter-file', {
+      // Run the task with our options
+      task({
         file: {src: srcFile, dest: destPath},
         data: data
       });
@@ -72,6 +72,17 @@ module.exports = function (grunt) {
       // Return the destination
       return destPath;
     });
+
+    // Return the files we wrote to
+    return destFiles;
+  }
+
+  // Beautify directory of files
+  grunt.registerMultiTask('html-prettyprinter-dir', 'Prettyprint HTML directory from src to dest', function () {
+    // Run the prettyprint task on our items
+    var destFiles = gruntMixinDir(function callPrettyprinterFile (options) {
+      grunt.helper('html-prettyprinter-file', options);
+    }, this);
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
