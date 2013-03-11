@@ -34,28 +34,10 @@ module.exports = function (grunt) {
   // ==========================================================================
 
   // Common abstraction for single and dir tasks
-  // TODO: Relocate into grunt helper (html-prettyprinter-file)
-  function prettyprint(options) {
-    // Collect the filepaths we need
-    var file = options.file,
-        data = options.data,
-        src = file.src,
-        srcFiles = grunt.file.expand(src),
-        separator = data.separator || '\n',
-        dest = file.dest;
-
-    // Read in the srcFiles, join, and beautify it
-    var srcBlob = grunt.helper('concat', srcFiles, {separator: separator}),
-        beautifiedContent = grunt.helper('html-prettyprinter', srcBlob);
-
-    // Write out the content
-    grunt.file.write(dest, beautifiedContent);
-  }
-
   // Beautify single file
   grunt.registerMultiTask('html-prettyprinter', 'Prettyprint HTML from src to dest', function () {
     // Run the prettyprint task on our single item
-    prettyprint(this);
+    grunt.helper('html-prettyprinter-file', this);
 
     // Fail task if errors were logged.
     if (this.errorCount) { return false; }
@@ -82,7 +64,7 @@ module.exports = function (grunt) {
           destPath = path.join(destDir, destFile);
 
       // Run the prettyprint task on our single item
-      prettyprint({
+      grunt.helper('html-prettyprinter-file', {
         file: {src: srcFile, dest: destPath},
         data: data
       });
@@ -102,7 +84,24 @@ module.exports = function (grunt) {
   // HELPERS
   // ==========================================================================
 
-  grunt.registerHelper('html-prettyprinter', function (content) {
+  grunt.registerHelper('html-prettyprinter-file',  function prettyprintFile (options) {
+    // Collect the filepaths we need
+    var file = options.file,
+        data = options.data,
+        src = file.src,
+        srcFiles = grunt.file.expand(src),
+        separator = data.separator || '\n',
+        dest = file.dest;
+
+    // Read in the srcFiles, join, and beautify it
+    var srcBlob = grunt.helper('concat', srcFiles, {separator: separator}),
+        beautifiedContent = grunt.helper('html-prettyprinter', srcBlob);
+
+    // Write out the content
+    grunt.file.write(dest, beautifiedContent);
+  });
+
+  grunt.registerHelper('html-prettyprinter', function prettyprintContent (content) {
     var beautifiedContent = htmlPrettyprinter(content);
     return beautifiedContent;
   });
