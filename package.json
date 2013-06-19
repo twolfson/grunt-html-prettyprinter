@@ -1,7 +1,7 @@
 {
   "name": "grunt-html-prettyprinter",
   "description": "Task that beautifies your HTML",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "homepage": "https://github.com/twolfson/grunt-html-prettyprinter",
   "author": {
     "name": "Todd Wolfson",

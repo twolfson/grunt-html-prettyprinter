@@ -1,4 +1,4 @@
-# grunt-html-prettyprinter
+# grunt-html-prettyprinter [![Donate on Gittip](http://badgr.co/gittip/twolfson.png)](https://www.gittip.com/twolfson/)
 
 Task that beautifies your HTML
 
