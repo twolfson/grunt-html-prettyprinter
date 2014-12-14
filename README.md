@@ -1,4 +1,4 @@
-# grunt-html-prettyprinter [![Donate on Gittip](http://badgr.co/gittip/twolfson.png)](https://www.gittip.com/twolfson/)
+# grunt-html-prettyprinter
 
 Task that beautifies your HTML
 
@@ -71,11 +71,16 @@ grunt.initConfig({
 ```
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt][grunt] and test via `npm test`..
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint your code using [grunt][grunt] and test via `npm test`.
 
-## Release History
-_(Nothing yet)_
+## Donating
+Support this project and [others by twolfson][gratipay] via [gratipay][].
+
+[![Support via Gratipay][gratipay-badge]][gratipay]
+
+[gratipay-badge]: https://cdn.rawgit.com/gratipay/gratipay-badge/2.x.x/dist/gratipay.png
+[gratipay]: https://www.gratipay.com/twolfson/
 
 ## License
-Copyright (c) 2012 Todd Wolfson
+Copyright (c) 2012-2014 Todd Wolfson
 Licensed under the MIT license.
