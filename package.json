@@ -21,10 +21,8 @@
       "url": "https://github.com/twolfson/grunt-html-prettyprinter/blob/master/LICENSE-MIT"
     }
   ],
-  "main": "grunt.js",
-  "bin": "bin/grunt-html-prettyprinter",
   "engines": {
-    "node": "*"
+    "node": ">=0.8.0"
   },
   "scripts": {
     "test": "cd test && grunt"
