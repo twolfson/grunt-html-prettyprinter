@@ -33,8 +33,20 @@ grunt.initConfig({
       dest: 'clean/index.html'
     },
 
-    // Lastly, we support the grunt compact format (dest: src)
-    'clean/index.html': 'dirty/index.html'
+    // We support the grunt compact format (dest: src)
+    'clean/index.html': 'dirty/index.html',
+
+    // Options can be specified via the `options` key (e.g. tabs)
+    // Full list of options can be found at:
+    //   https://github.com/maxogden/commonjs-html-prettyprinter/blob/61f7fad73b6dd49503f703730eb2410812312118/lib/html.js#L19-L26
+    custom: {
+      src: 'dirty/index.html',
+      dest: 'clean/index-with-tabs.html',
+      options: {
+        indent_size: 2,
+        indent_char: '\t'
+      }
+    }
   },
   // Beautify multiple files in a directory
   'html-prettyprinter-dir': {
@@ -64,8 +76,20 @@ grunt.initConfig({
       }
     },
 
-    // Lastly, we support the grunt compact format (dest: src)
-    'clean/': ['dirty/index.html', 'dirty/main.html']
+    // We support the grunt compact format (dest: src)
+    'clean/': ['dirty/index.html', 'dirty/main.html'],
+
+    // Options can be specified via the `options` key (e.g. tabs)
+    // Full list of options can be found at:
+    //   https://github.com/maxogden/commonjs-html-prettyprinter/blob/61f7fad73b6dd49503f703730eb2410812312118/lib/html.js#L19-L26
+    custom: {
+      src: ['dirty/index.html'],
+      dest: 'clean-with-tabs/',
+      options: {
+        indent_size: 2,
+        indent_char: '\t'
+      }
+    }
   }
 });
 ```
