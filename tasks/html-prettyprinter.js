@@ -78,14 +78,14 @@ module.exports = function (grunt) {
 
     // Read in the srcFiles, join, and beautify it
     var srcBlob = grunt.helper('concat', srcFiles, {separator: separator}),
-        beautifiedContent = grunt.helper('html-prettyprinter', srcBlob);
+        beautifiedContent = grunt.helper('html-prettyprinter', srcBlob, data.options);
 
     // Write out the content
     grunt.file.write(dest, beautifiedContent);
   });
 
-  grunt.registerHelper('html-prettyprinter', function prettyprintContent (content) {
-    var beautifiedContent = htmlPrettyprinter(content);
+  grunt.registerHelper('html-prettyprinter', function prettyprintContent (content, options) {
+    var beautifiedContent = htmlPrettyprinter(content, options || {});
     return beautifiedContent;
   });
 

@@ -11,6 +11,7 @@ module.exports = function (grunt) {
         src: ['test_files/file.html'],
         dest: 'actual/file-tabs.html',
         options: {
+          indent_size: 2,
           indent_char: '\t'
         }
       }
