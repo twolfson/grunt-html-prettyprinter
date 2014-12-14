@@ -60,5 +60,5 @@ exports['html-prettyprinter'] = {
 
     // Return
     test.done();
-  },
+  }
 };
