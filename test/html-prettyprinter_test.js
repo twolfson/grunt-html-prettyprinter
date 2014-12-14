@@ -48,5 +48,17 @@ exports['html-prettyprinter'] = {
 
     // Callback
     test.done();
-  }
+  },
+  'tabs': function(test) {
+    // Set up
+    test.expect(1);
+
+    // Assert content is the same
+    var expectedContent = grunt.file.read('expected/file-tabs.html'),
+        actualContent = grunt.file.read('actual/file-tabs.html');
+    test.equal(actualContent, expectedContent, 'should match the beautified content.');
+
+    // Return
+    test.done();
+  },
 };

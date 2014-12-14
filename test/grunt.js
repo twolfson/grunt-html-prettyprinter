@@ -6,6 +6,13 @@ module.exports = function (grunt) {
       all: {
         src: ['test_files/file.html'],
         dest: 'actual/file.html'
+      },
+      tabs: {
+        src: ['test_files/file.html'],
+        dest: 'actual/file-tabs.html',
+        options: {
+          indent_char: '\t'
+        }
       }
     },
     'html-prettyprinter-dir': {
